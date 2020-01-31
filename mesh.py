@@ -31,25 +31,38 @@ class Mesh:
 
 
     @staticmethod
-    def create_cube(size, mesh = None):
+    def create_legend(size, mesh = None):
         if (mesh == None):
-            mesh = Mesh("UnknownCube")
+            mesh = Mesh("LegendaryLegend")
 
-        Mesh.create_quad(vector3( size[0] * 0.5, 0, 0), vector3(0, -size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
-        Mesh.create_quad(vector3(-size[0] * 0.5, 0, 0), vector3(0,  size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_triangle(vector3(0, 0, size[0] * 0.5), vector3(size[1] * 0.5 , 0, 0), vector3(0, size[2] * 0.5, 0), mesh)
+        Mesh.create_triangle(vector3(0, 0, -size[0] * 0.5), vector3(size[1] * 0.5, 0, 0), vector3(0, size[2] * 0.5, 0), mesh)
 
-        Mesh.create_quad(vector3(0,  size[1] * 0.5, 0), vector3(size[0] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
-        Mesh.create_quad(vector3(0, -size[1] * 0.5, 0), vector3(-size[0] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
-
-        Mesh.create_quad(vector3(0, 0,  size[2] * 0.5), vector3(-size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
-        Mesh.create_quad(vector3(0, 0, -size[2] * 0.5), vector3( size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
+        Mesh.create_square(vector3(-size[0] * 0.5, 0, 0), vector3(0, size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_square(vector3(0, -size[0] * 0.5, 0), vector3(size[1] * 0.5, 0, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_square(vector3(0, 0, 0), vector3(-size[1] * 0.5, size[1] * 0.5, 0), vector3(0,0, size[2] * 0.5), mesh)
 
         return mesh
 
     @staticmethod
-    def create_quad(origin, axis0, axis1, mesh):
+    def create_childlegend(size, mesh = None):
         if (mesh == None):
-            mesh = Mesh("UnknownQuad")
+            mesh = Mesh("LegendaryLegend")
+
+        Mesh.create_triangle(vector3(0, 0, -size[0] * 0.5), vector3(size[1] * 0.5 , 0, 0), vector3(0, -size[2] * 0.5, 0), mesh)
+        Mesh.create_triangle(vector3(0, 0, size[0] * 0.5), vector3(size[1] * 0.5, 0, 0), vector3(0, -size[2] * 0.5, 0), mesh)
+
+        Mesh.create_square(vector3(-size[0] * 0.5, 0, 0), vector3(0, -size[1] * 0.5, 0), vector3(0, 0, -size[2] * 0.5), mesh)
+        Mesh.create_square(vector3(0, size[0] * 0.5, 0), vector3(size[1] * 0.5, 0, 0), vector3(0, 0, -size[2] * 0.5), mesh)
+        Mesh.create_square(vector3(0, 0, 0), vector3(-size[1] * 0.5, -size[1] * 0.5, 0), vector3(0,0, -size[2] * 0.5), mesh)
+
+        return mesh
+
+
+    @staticmethod
+    def create_square(origin, axis0, axis1, mesh):
+        if (mesh == None):
+            mesh = Mesh("LegendarySquare")
 
         poly = []
         poly.append(origin + axis0 + axis1)
@@ -60,4 +73,19 @@ class Mesh:
         mesh.polygons.append(poly)
 
         return mesh
+
     
+    @staticmethod
+    def create_triangle(origin, axis0, axis1, mesh):
+        if (mesh == None):
+            mesh = Mesh("LegendaryTriangle")
+
+        poly = []
+        poly.append(origin - axis0 + axis1)
+        poly.append(origin - axis0 - axis1)
+        poly.append(origin + axis0 - axis1)
+
+        mesh.polygons.append(poly)
+
+        return mesh
+

@@ -33,16 +33,16 @@ def main():
     obj1 = Object3d("TestObject")
     obj1.scale = vector3(1, 1, 1)
     obj1.position = vector3(0, -1, 0)
-    obj1.mesh = Mesh.create_cube((1, 1, 1))
-    obj1.material = Material(color(1,0,0,1), "TestMaterial1")
+    obj1.mesh = Mesh.create_legend((1, 1, 1))
+    obj1.material = Material(color(1,1,0,1), "TestMaterial1")
     scene.add_object(obj1)
 
     # Create a second object, and add it as a child of the first object
     # When the first object rotates, this one will also mimic the transform
     obj2 = Object3d("ChildObject")
-    obj2.position += vector3(0, 0.75, 0)
-    obj2.mesh = Mesh.create_cube((0.5, 0.5, 0.5))
-    obj2.material = Material(color(0,1,0,1), "TestMaterial2")
+    obj2.position -= vector3(0, 0.75, 0)
+    obj2.mesh = Mesh.create_childlegend((0.5, 0.5, 0.5))
+    obj2.material = Material(color(0,1,1,1), "TestMaterial2")
     obj1.add_child(obj2)
 
     # Specify the rotation of the object. It will rotate 15 degrees around the axis given, 
