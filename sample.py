@@ -32,7 +32,7 @@ def main():
     # This cube has 1 unit of side, and is red
     obj1 = Object3d("TestObject")
     obj1.scale = vector3(1, 1, 1)
-    obj1.position = vector3(0, -1, 0)
+    obj1.position = vector3(0, 0, 0)
     obj1.mesh = Mesh.create_legend((1, 1, 1))
     obj1.material = Material(color(1,1,0,1), "TestMaterial1")
     scene.add_object(obj1)
@@ -47,7 +47,7 @@ def main():
 
     # Specify the rotation of the object. It will rotate 15 degrees around the axis given, 
     # every second
-    angle = 15
+    angle = 30
     axis = vector3(1,0.7,0.2)
     axis.normalize()
 
@@ -69,6 +69,32 @@ def main():
             elif (event.type == pygame.KEYDOWN):
                 if (event.key == pygame.K_ESCAPE):
                     return
+                elif (event.key == pygame.K_LEFT):
+                    axis = vector3(0, -1, 0)
+                elif (event.key == pygame.K_RIGHT):
+                    axis = vector3(0, 1, 0)
+                elif (event.key == pygame.K_UP):
+                    axis = vector3(-1, 0, 0)
+                elif (event.key == pygame.K_DOWN):
+                    axis = vector3(1, 0, 0)
+                elif (event.key == pygame.K_PAGEUP):
+                    axis = vector3(0, 0, 1)
+                elif (event.key == pygame.K_PAGEDOWN):
+                    axis = vector3(0, 0, -1)
+                elif (event.key == pygame.K_w):
+                    obj1.position += vector3(0, 1, 0)
+                elif (event.key == pygame.K_s):
+                    obj1.position += vector3(0, -1, 0)
+                elif (event.key == pygame.K_a):
+                    obj1.position += vector3(-1, 0, 0)
+                elif (event.key == pygame.K_d):
+                    obj1.position += vector3(1, 0, 0)
+                elif (event.key == pygame.K_q):
+                    obj1.position += vector3(0, 0, 1)
+                elif (event.key == pygame.K_e):
+                    obj1.position += vector3(0, 0, -1)
+
+
 
         # Clears the screen with a very dark blue (0, 0, 20)
         screen.fill((0,0,0))
