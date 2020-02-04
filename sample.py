@@ -48,8 +48,7 @@ def main():
     # Specify the rotation of the object. It will rotate 15 degrees around the axis given, 
     # every second
     angle = 30
-    axis = vector3(1,0.7,0.2)
-    axis.normalize()
+    axis = vector3(0, 0, 0)
 
     # Timer
     delta_time = 0
