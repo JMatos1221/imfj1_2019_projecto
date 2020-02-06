@@ -6,7 +6,7 @@ from color import *
 class Scene:
     def __init__(self, name):
         self.name = name
-        self.camera = Camera(True, 640, 480)
+        self.camera = Camera(True, 1280, 720)
         self.objects = []
 
     def add_object(self, obj):

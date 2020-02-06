@@ -20,6 +20,7 @@ def main():
     res_y = 720
 
     move = 0.02
+    sens = 10
 
     forward = False
     backwards = False
@@ -105,13 +106,13 @@ def main():
             
 
         if forward:
-            scene.camera.position += vector3(0,0,move)
+            scene.camera.position += scene.camera.forward() * move
         if backwards:
-            scene.camera.position += vector3(0,0,-move)
+            scene.camera.position -= scene.camera.forward() * move
         if left:
-            scene.camera.position += vector3(-move,0,0)
+            scene.camera.position -= scene.camera.right() * move
         if right:
-            scene.camera.position += vector3(move,0,0)
+            scene.camera.position += scene.camera.right() * move
         scene.camera.position = vector3(scene.camera.position.x, 0, scene.camera.position.z)
 
 
@@ -119,13 +120,11 @@ def main():
 
         #Camera Up
         if(pygame.mouse.get_pos()[1] < res_y / 2):
-            mouse_y = pygame.mouse.get_pos()[1] - (res_y/2)
-            axis -= vector3(mouse_y, 0, 0)
+            axis += scene.camera.right() * sens
            
         #Camera Down
         if(pygame.mouse.get_pos()[1] > res_y / 2):
-            mouse_y = pygame.mouse.get_pos()[1] - (res_y/2)
-            axis -= vector3(mouse_y, 0, 0)
+            axis -= scene.camera.right() * sens
 
             #Camera Left
         if(pygame.mouse.get_pos()[0] < res_x / 2):
