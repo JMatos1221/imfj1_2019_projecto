@@ -38,6 +38,7 @@ def main():
     scene.camera.position -= vector3(0,0,2)
     pygame.mouse.set_pos(res_x/2, res_y/2)
 
+    #Creates object 1
     obj1 = Object3d("Object1")
     obj1.scale = vector3(1, 1, 1)
     obj1.position = vector3(0, 0, 0)
@@ -45,6 +46,7 @@ def main():
     obj1.material = Material(color(1,1,0,1), "Material1")
     scene.add_object(obj1)
 
+    #Creates object 2
     obj2 = Object3d("Object2")
     obj2.scale = vector3(2, 2, 2)
     obj2.position = vector3(3, 0, 4)
@@ -52,6 +54,7 @@ def main():
     obj2.material = Material(color(1,1,0,1), "Material2")
     scene.add_object(obj2)
 
+    #Creates object 3
     obj3 = Object3d("Object3")
     obj3.scale = vector3(3, 3, 3)
     obj3.position = vector3(6, 0, 2)
@@ -59,6 +62,7 @@ def main():
     obj3.material = Material(color(1,1,0,1), "Material3")
     scene.add_object(obj3)
 
+    #Creates object 4
     obj4 = Object3d("Object4")
     obj4.scale = vector3(1, 1, 1)
     obj4.position = vector3(1, 0, 5)
@@ -66,6 +70,7 @@ def main():
     obj4.material = Material(color(1,1,0,1), "Material4")
     scene.add_object(obj4)
 
+    # Setting the rotation to 0 with 15 angle
     angle = 15
     axis = vector3(0,0,0)
 
@@ -73,6 +78,7 @@ def main():
     delta_time = 0
     prev_time = time.time()
 
+    #Cursor not visible, get events
     pygame.mouse.set_visible(False)
     pygame.event.set_grab(True)
 
@@ -87,6 +93,8 @@ def main():
             elif (event.type == pygame.KEYDOWN):
                 if (event.key == pygame.K_ESCAPE):
                     return
+
+            #Check for key presses (WASD) to calculate movement
             if (pygame.key.get_pressed()[pygame.K_w]):
                 forward = True
             else:
@@ -104,7 +112,7 @@ def main():
             else:
                 right = False
             
-
+        #Executes the movement
         if forward:
             scene.camera.position += scene.camera.forward() * move
         if backwards:
@@ -118,26 +126,27 @@ def main():
 
 
 
-        #Camera Up
+        #Camera Movement Up
         if(pygame.mouse.get_pos()[1] < res_y / 2):
             axis += scene.camera.right() * sens
            
-        #Camera Down
+        #Camera Movement Down
         if(pygame.mouse.get_pos()[1] > res_y / 2):
             axis -= scene.camera.right() * sens
 
-            #Camera Left
+            #Camera Movement Left
         if(pygame.mouse.get_pos()[0] < res_x / 2):
             mouse_x = pygame.mouse.get_pos()[0] - (res_x/2)
             axis -= vector3(0,mouse_x,0)
 
-            #Camera Right    
+            #Camera Movement Right    
         if(pygame.mouse.get_pos()[0] > res_x / 2):
             mouse_x = pygame.mouse.get_pos()[0] - (res_x/2)
             axis -= vector3(0,mouse_x,0)
 
         pygame.mouse.set_pos((res_x / 2, res_y / 2))
 
+        #Set's the camera to rotate according to the mouse movement calculated above
         camera_rotation = from_rotation_vector((axis * math.radians(angle) * delta_time).to_np3()) 
         scene.camera.rotation *= camera_rotation
 

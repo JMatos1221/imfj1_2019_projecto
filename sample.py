@@ -54,6 +54,7 @@ def main():
     delta_time = 0
     prev_time = time.time()
 
+    #Cursor not visible, get events
     pygame.mouse.set_visible(False)
     pygame.event.set_grab(True)
 
@@ -65,9 +66,11 @@ def main():
             if (event.type == pygame.QUIT):
                 # Exits the application immediately
                 return
+            #Exits if ESC is pressed
             elif (event.type == pygame.KEYDOWN):
                 if (event.key == pygame.K_ESCAPE):
                     return
+                #Rotate object around its axis
                 elif (event.key == pygame.K_LEFT):
                     axis = vector3(0, -1, 0)
                 elif (event.key == pygame.K_RIGHT):
@@ -80,6 +83,7 @@ def main():
                     axis = vector3(0, 0, 1)
                 elif (event.key == pygame.K_PAGEDOWN):
                     axis = vector3(0, 0, -1)
+                #Moves the object (upwards, downwards, left, right, forward, backwards)
                 elif (event.key == pygame.K_w):
                     obj1.position += vector3(0, 1, 0)
                 elif (event.key == pygame.K_s):

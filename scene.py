@@ -18,6 +18,7 @@ class Scene:
 
         clip_matrix = camera_matrix @ projection_matrix
 
+        #Renders the object if it is totally on the screen
         for obj in self.objects:
             if (dot_product(self.camera.forward().normalized(), - (obj.position - self.camera.position).normalized()) > -0.5):
                 continue

@@ -1,4 +1,4 @@
-import pygame
++import pygame
 from vector3 import *
 
 class Mesh:
@@ -31,6 +31,7 @@ class Mesh:
 
 
     @staticmethod
+    #Creating triangular prism
     def create_legend(size, mesh = None):
         if (mesh == None):
             mesh = Mesh("LegendaryLegend")
@@ -45,6 +46,7 @@ class Mesh:
         return mesh
 
     @staticmethod
+    #Creating child triangular prism
     def create_childlegend(size, mesh = None):
         if (mesh == None):
             mesh = Mesh("LegendaryLegend")
@@ -60,6 +62,7 @@ class Mesh:
 
 
     @staticmethod
+    #Creating square
     def create_square(origin, axis0, axis1, mesh):
         if (mesh == None):
             mesh = Mesh("LegendarySquare")
@@ -76,6 +79,7 @@ class Mesh:
 
     
     @staticmethod
+    #Creating triangle
     def create_triangle(origin, axis0, axis1, mesh):
         if (mesh == None):
             mesh = Mesh("LegendaryTriangle")
