@@ -2,6 +2,7 @@
 import pygame
 import pygame.freetype
 import time
+import math
 
 from scene import *
 from object3d import *
@@ -15,8 +16,15 @@ def main():
     pygame.init()
 
     # Define the size/resolution of our window
-    res_x = 640
-    res_y = 480
+    res_x = 1280
+    res_y = 720
+
+    move = 0.02
+
+    forward = False
+    backwards = False
+    left = False
+    right = False
 
     # Create a window and a display surface
     screen = pygame.display.set_mode((res_x, res_y))
@@ -27,6 +35,7 @@ def main():
 
     # Moves the camera back 2 units
     scene.camera.position -= vector3(0,0,2)
+    pygame.mouse.set_pos(res_x/2, res_y/2)
 
     obj1 = Object3d("Object1")
     obj1.scale = vector3(1, 1, 1)
@@ -56,6 +65,9 @@ def main():
     obj4.material = Material(color(1,1,0,1), "Material4")
     scene.add_object(obj4)
 
+    angle = 15
+    axis = vector3(0,0,0)
+
     # Timer
     delta_time = 0
     prev_time = time.time()
@@ -74,7 +86,62 @@ def main():
             elif (event.type == pygame.KEYDOWN):
                 if (event.key == pygame.K_ESCAPE):
                     return
+            if (pygame.key.get_pressed()[pygame.K_w]):
+                forward = True
+            else:
+                forward = False
+            if (pygame.key.get_pressed()[pygame.K_s]):
+                backwards = True
+            else:
+                backwards = False
+            if (pygame.key.get_pressed()[pygame.K_a]):
+                left = True
+            else:
+                left = False
+            if (pygame.key.get_pressed()[pygame.K_d]):
+                right = True
+            else:
+                right = False
             
+
+        if forward:
+            scene.camera.position += vector3(0,0,move)
+        if backwards:
+            scene.camera.position += vector3(0,0,-move)
+        if left:
+            scene.camera.position += vector3(-move,0,0)
+        if right:
+            scene.camera.position += vector3(move,0,0)
+        scene.camera.position = vector3(scene.camera.position.x, 0, scene.camera.position.z)
+
+
+
+
+        #Camera Up
+        if(pygame.mouse.get_pos()[1] < res_y / 2):
+            mouse_y = pygame.mouse.get_pos()[1] - (res_y/2)
+            axis -= vector3(mouse_y, 0, 0)
+           
+        #Camera Down
+        if(pygame.mouse.get_pos()[1] > res_y / 2):
+            mouse_y = pygame.mouse.get_pos()[1] - (res_y/2)
+            axis -= vector3(mouse_y, 0, 0)
+
+            #Camera Left
+        if(pygame.mouse.get_pos()[0] < res_x / 2):
+            mouse_x = pygame.mouse.get_pos()[0] - (res_x/2)
+            axis -= vector3(0,mouse_x,0)
+
+            #Camera Right    
+        if(pygame.mouse.get_pos()[0] > res_x / 2):
+            mouse_x = pygame.mouse.get_pos()[0] - (res_x/2)
+            axis -= vector3(0,mouse_x,0)
+
+        pygame.mouse.set_pos((res_x / 2, res_y / 2))
+
+        camera_rotation = from_rotation_vector((axis * math.radians(angle) * delta_time).to_np3()) 
+        scene.camera.rotation *= camera_rotation
+
         # Clears the screen with a very dark blue (0, 0, 20)
         screen.fill((0,0,0))
 
@@ -86,6 +153,8 @@ def main():
         # Updates the timer, so we we know how long has it been since the last frame
         delta_time = time.time() - prev_time
         prev_time = time.time()
+
+        axis = vector3(0, 0, 0)
 
 
 # Run the main function
